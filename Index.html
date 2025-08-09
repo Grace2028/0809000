@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>秒鐘顏色按鈕表單</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  #clock { font-size: 48px; margin-bottom: 20px; }
+  .color-btn { padding: 10px 20px; margin: 5px; border: none; cursor: pointer; color: white; }
+  #red { background-color: #e74c3c; }
+  #green { background-color: #27ae60; }
+  #blue { background-color: #2980b9; }
+  #intro { margin-top: 20px; font-weight: bold; }
+  form { margin-top: 20px; }
+  label, input { display: block; margin: 5px 0; }
+</style>
+</head>
+<body>
+
+<div id="clock">00:00:00</div>
+
+<button class="color-btn" id="red">紅色</button>
+<button class="color-btn" id="green">綠色</button>
+<button class="color-btn" id="blue">藍色</button>
+
+<div id="intro">這是一個簡單的秒鐘和顏色按鈕示範網頁。</div>
+
+<form id="countryForm">
+  <label for="country">輸入國家名稱：</label>
+  <input type="text" id="country" name="country" placeholder="請輸入國家" required />
+  <button type="submit">送出</button>
+</form>
+
+<div id="countryDisplay" style="margin-top:10px; font-weight:bold;"></div>
+
+<script>
+  // 秒鐘功能
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // 顏色按鈕功能
+  const buttons = document.querySelectorAll('.color-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.body.style.backgroundColor = btn.style.backgroundColor;
+    });
+  });
+
+  // 表單功能
+  const form = document.getElementById('countryForm');
+  const display = document.getElementById('countryDisplay');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const country = document.getElementById('country').value.trim();
+    if(country) {
+      display.textContent = `你輸入的國家是：${country}`;
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
